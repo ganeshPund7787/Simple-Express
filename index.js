@@ -1,17 +1,14 @@
 import express from "express"
 import { config } from "dotenv"
-import { about, contact, home } from "./controllers/server.controllers.js"
+import routes from "./routes/user.roues.js";
+
 
 config({ path: "./.env" })
 
 const app = express()
+app.use(routes);
 
-app.get("/", home)
 
-app.get("/about", about)
-
-app.get("/contact", contact)
-
-app.listen(process.env.PORT, () => {
-  console.log(`server is working on http://localhost:${process.env.PORT}`)
+app.listen(4000, () => {
+  console.log(`server is working on http://localhost:4000`)
 })
