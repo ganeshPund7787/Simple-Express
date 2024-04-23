@@ -38,12 +38,14 @@ export const loginUser = async (req, res, next) => {
 
         if (!isPasswordMatch) return next(errorHandler(404, "Wromg Password"));
         // cookie
-        const token = jwt.sign({_id: user._id},"ganesh");
-        res.status(200).cookie("token", token, {httpOnly: true, maxAge: 24*60*60*1000})
-        .json({
-            message: "User login succeessfuly"
-        });
+       const token = jwt.sign({_id: user._id}, process.env.JWT_PASSWORD_KEY);
 
+       res.status(200).cookie("cookie", token, 
+       {
+        httpOnly: true, maxAge: 24*60*60*1000})
+        .json({
+            message: "User Login Successfuly"
+       })
        } catch (error) {
             next();
        }
@@ -51,17 +53,20 @@ export const loginUser = async (req, res, next) => {
 }
 
 
+export const logout = (req, res) => {
+    res.clearCookie("cookie", process.env.JWT_PASSWORD_KEY)
+    .json({
+        message: "User logout succesfuly"
+    })
+}
+
 export const profile = (req, res, next) => {
     const {user} = req;
 
     const {password, ...rest} = user._doc;
-
-    res.json({
-        msg: "profile page", 
+    
+    res.status(200).json({
+        message: "Hello", 
         rest
     })
-}
-
-export const logout = (req, res) => {
-    res.clearCookie("token",  "ganesh").json({msg: "logout"})
 }

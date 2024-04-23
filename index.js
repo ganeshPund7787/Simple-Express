@@ -1,6 +1,6 @@
 import express from "express"
 import { config } from "dotenv"
-config({ path: "./.env" })
+config({ path: "./config/.env" })
 import routes from "./routes/user.roues.js";
 import cookieParser from "cookie-parser";
 import { errorMiddleware } from "./middleware/error.middleware.js";
